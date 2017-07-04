@@ -1,6 +1,8 @@
 const request = require('request');
 const fs = require('fs')
 
+const input = process.argv.slice(2)
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 // Set github username and access token to values stored in environment variables
@@ -40,7 +42,7 @@ function downloadImageByURL(url, filePath) {
          .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors("jquery", "jquery", (data) => {
+getRepoContributors(input[0], input[1], (data) => {
 
   console.log('Attempting to download images')
 
