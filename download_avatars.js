@@ -1,4 +1,5 @@
 const request = require('request');
+const fs = require('fs')
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
@@ -39,4 +40,15 @@ const getAvatar = (data) => {
   });
 }
 
+// run http get request to download image from a URL
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+         .pipe(fs.createWriteStream(filePath));
+}
+
+// downloadImageByURL()
+
 getRepoContributors("jquery", "jquery", getAvatar)
+
+
+
