@@ -13,6 +13,12 @@ const GITHUB_TOKEN = process.env.GITHUB_ACCESS_TOKEN;
 // Parses contributor json and passes to callback
 function getRepoContributors(repoOwner, repoName, cb) {
 
+  // checks for input
+  if (repoOwner === undefined || repoName === undefined) {
+    console.log('Please input the owner and name of the repository');
+    return
+  };
+
   // string literal of url with auto-fill of information
   const requestURL = `https://${GITHUB_USER}:${GITHUB_TOKEN}@api.github.com/repos/${repoOwner}/${repoName}/contributors`;
 
