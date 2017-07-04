@@ -23,6 +23,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   // gets JSON object containing contributors, passes to callback
   request.get(requestURL, requestOptions, (error, response, body) => {
+    console.log('Getting data...')
     try {
       const data = JSON.parse(body);
       cb(data);
@@ -33,22 +34,25 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
-// when given JSON object of contributors, gives user avatar urls
-const getAvatar = (data) => {
-  data.forEach((user) => {
-    console.log(user.avatar_url)
-  });
-}
-
 // run http get request to download image from a URL
 function downloadImageByURL(url, filePath) {
   request.get(url)
          .pipe(fs.createWriteStream(filePath));
 }
 
-// downloadImageByURL()
+getRepoContributors("jquery", "jquery", (data) => {
 
-getRepoContributors("jquery", "jquery", getAvatar)
+  console.log('Attempting to download images')
+
+  // creates a filepath and url from data, downloads image, saves to avatars file
+  data.forEach((user) => {
+    let filePath = `avatars/${user.login}.jpg`;
+    let url = user.avatar_url;
+    downloadImageByURL(url, filePath);
+  });
+
+  console.log('Done!')
+})
 
 
 
